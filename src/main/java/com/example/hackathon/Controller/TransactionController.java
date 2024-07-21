@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/transaction")
 public class TransactionController {
 
@@ -24,6 +24,7 @@ public class TransactionController {
 
     @GetMapping("/getTransactionByID/{transaction_id}")
     public Transaction getTransactionByID(@PathVariable Long transaction_id){
+
         return transactionService.getTransactionByID(transaction_id);
     }
 

@@ -20,7 +20,7 @@ public class TransactionService {
     }
 
     public Transaction getTransactionByID(Long transaction_id){
-        return transactionRepository.findById(transaction_id).get();
+        return transactionRepository.findById(transaction_id).orElse(null);
 
     }
 
@@ -32,18 +32,20 @@ public class TransactionService {
         transactionRepository.save(new_transaction);
     }
 
-    public void updateTransaction(Transaction updated_transaction,Long transaction_id){
-        Transaction transaction;
-
-        transaction=transactionRepository.findById(transaction_id).get();
-        transaction.setAmount(updated_transaction.getAmount());
-        transaction.setDate(updated_transaction.getDate());
-        transaction.setDescription(updated_transaction.getDescription());
-        transaction.setUser(updated_transaction.getUser());
-
-        transactionRepository.save(transaction);
+    public void updateTransaction(Transaction updated_transaction,Long transaction_id) {
 
 
+        Transaction transaction = transactionRepository.findById(transaction_id).orElse(null);
+
+        if (transaction != null) {
+            transaction.setAmount(updated_transaction.getAmount());
+            transaction.setDate(updated_transaction.getDate());
+            transaction.setDescription(updated_transaction.getDescription());
+            transaction.setUser(updated_transaction.getUser());
+
+            transactionRepository.save(transaction);
+
+
+        }
     }
-
 }
